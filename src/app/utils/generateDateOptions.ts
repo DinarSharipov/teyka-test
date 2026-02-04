@@ -1,3 +1,4 @@
+/** Так как в не ясно какие конкретно даты должны быть , сделал просто 30 дней */
 export function generateDateOptions() {
   const today = new Date();
   const options = [];

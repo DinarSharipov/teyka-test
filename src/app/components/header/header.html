@@ -4,7 +4,10 @@
       <img width="20" src="/assets/book.svg" />
       <div>База знаний</div>
     </div>
-    <div class="flex gap-2 items-center">
+    <div
+      class="flex gap-2 items-center hover:bg-gray-100 px-2 rounded-lg cursor-pointer"
+      (click)="logoutPop.toggle($event)"
+    >
       <div
         class="w-8 h-8 rounded-full bg-lime-300 text-lg flex items-center font-light justify-center"
       >
@@ -16,4 +19,7 @@
       </div>
     </div>
   </div>
+  <p-popover #logoutPop class="p-0">
+    <app-button variant="black" (click)="logout()">Выйти</app-button>
+  </p-popover>
 </div>

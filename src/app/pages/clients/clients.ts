@@ -37,33 +37,43 @@ type Tabs = 'clients' | 'common-settings';
   styleUrl: './clients.css',
 })
 export class Clients implements OnInit {
+  /** Подключаемые сервисы */
   private cardsService = inject(CardsService);
   private pushService = inject(PushService);
   private messageService = inject(MessageService);
+
+  /** Работа с сущностями */
   public cards = signal<Array<Card & { checked: boolean }>>([]);
   public selectedCards: Card[] = [];
+
+  /** Пагинация и параметры поиска */
   public readonly searchControl = new FormControl('');
   public rows = 10;
   public first = 0;
   public totalSize = 0;
-  public activeTab = signal('clients');
   public readonly showSizes = signal([
     { label: 10, value: 10 },
     { label: 20, value: 20 },
     { label: 50, value: 50 },
   ]);
-  public visible = signal(false);
 
+  /** Вкладки */
+  public activeTab = signal('clients');
+
+  /** лоадеры для спиннеров */
   public tableLoading = signal(false);
   public pushLoading = signal(false);
-  public submitted = signal(false);
 
+  /** Для работы с формой пуша */
+  public visible = signal(false);
+  public submitted = signal(false);
   public readonly sendDateOptions = generateDateOptions();
   public selectedSendDate = signal('');
   public pushMessageText = signal('');
 
   ngOnInit(): void {
     this.fetch();
+    /** Поиск по введенному тексту через секунду */
     this.searchControl.valueChanges.pipe(debounceTime(1000)).subscribe((value) => {
       this.fetch(value ?? undefined);
     });
@@ -131,7 +141,7 @@ export class Clients implements OnInit {
       this.messageService.add({
         severity: 'warn',
         summary: 'Заполните следующие поля:',
-        detail: `${!this.pushMessageText ? '- Текст сообщения\n' : ''}${!this.selectedSendDate() ? '- Дата отправки рассылки' : ''}`,
+        detail: `${!this.pushMessageText() ? '- Текст сообщения\n' : ''}${!this.selectedSendDate() ? '- Дата отправки рассылки' : ''}`,
       });
       return;
     }

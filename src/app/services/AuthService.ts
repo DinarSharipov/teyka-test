@@ -1,5 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { inject, Injectable, signal } from '@angular/core';
+import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { map, tap } from 'rxjs/operators';
 
@@ -10,6 +11,7 @@ interface AuthResponse {
 
 @Injectable({ providedIn: 'root' })
 export class AuthService {
+  private router = inject(Router);
   private readonly AUTH_URL = 'https://api.teyca.ru/test-auth-only';
   private readonly TOKEN_KEY = 'teyka_token';
 
@@ -35,6 +37,7 @@ export class AuthService {
   public logout(): void {
     localStorage.removeItem(this.TOKEN_KEY);
     this.isAuth.set(false);
+    this.router.navigate(['/login']);
   }
 
   public getToken(): string | null {

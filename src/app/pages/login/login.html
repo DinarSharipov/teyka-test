@@ -2,12 +2,12 @@
   #form="ngForm"
   (ngSubmit)="submit(form)"
   novalidate
-  class="grid grid-cols-[1fr_0.7fr] min-h-screen text-sm font-extralight"
+  class="grid sm:grid-cols-[1fr_0.7fr] min-h-screen text-sm font-extralight"
 >
-  <div class="flex flex-col items-center gap-8 max-w-100 justify-self-center self-center">
+  <div class="flex flex-col items-center gap-8 max-w-110 justify-self-center self-center p-4">
     <img class="w-16 h-16" src="/assets/fav.svg" />
     <div class="flex flex-col gap-2 items-center tracking-tight font-semibold text-3xl">
-      <h1>Добро пожаловать в Тейка</h1>
+      <h1 class="text-center">Добро пожаловать в Тейка</h1>
       <p class="text-gray-300">Начните сегодня</p>
     </div>
     <p-floatlabel variant="on" class="w-full">
@@ -64,7 +64,9 @@
     </div>
   </div>
   <div class="carousel">
-    <div class="h-full w-full bg-[url('/assets/loyalty-image.svg')] carousel-item bg-cover">
+    <div
+      class="h-full w-full bg-[url('/assets/loyalty-image.svg')] carousel-item bg-center sm:bg-cover bg-no-repeat"
+    >
       <div class="flex flex-col justify-between h-full">
         <div>
           <p class="text-3xl font-light">Программа</p>
