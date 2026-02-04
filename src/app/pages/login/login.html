@@ -1,0 +1,97 @@
+<form
+  #form="ngForm"
+  (ngSubmit)="submit(form)"
+  novalidate
+  class="grid grid-cols-[1fr_0.7fr] min-h-screen text-sm font-extralight"
+>
+  <div class="flex flex-col items-center gap-8 max-w-100 justify-self-center self-center">
+    <img class="w-16 h-16" src="/assets/fav.svg" />
+    <div class="flex flex-col gap-2 items-center tracking-tight font-semibold text-3xl">
+      <h1>Добро пожаловать в Тейка</h1>
+      <p class="text-gray-300">Начните сегодня</p>
+    </div>
+    <p-floatlabel variant="on" class="w-full">
+      <input
+        required
+        name="login"
+        class="w-full"
+        pInputText
+        id="login"
+        [(ngModel)]="login"
+        autocomplete="off"
+        #loginModel="ngModel"
+      />
+      <label for="login">Номер телефона / Адрес эл.почты</label>
+      @if (form.submitted && loginModel.invalid) {
+        <p class="mt-1 text-red-500 text-xs">Поле обязательно для заполнения</p>
+      }
+    </p-floatlabel>
+
+    <p-floatlabel class="w-full" variant="on">
+      <input
+        name="password"
+        required
+        class="w-full"
+        pInputText
+        id="password"
+        [(ngModel)]="password"
+        autocomplete="off"
+        #passwordModel="ngModel"
+      />
+      <label for="password">Введите пароль</label>
+      @if (form.submitted && passwordModel.invalid) {
+        <p class="mt-1 text-red-500 text-xs">Поле обязательно для заполнения</p>
+      }
+    </p-floatlabel>
+    <button
+      type="submit"
+      [disabled]="loading"
+      class="w-full h-11.5 bg-[#1F1F1F] rounded-sm text-white cursor-pointer hover:opacity-85 active:opacity-100 flex justify-center items-center"
+    >
+      @if (loading) {
+        <div class="animate-spin w-5 h-5 rounded-full border-r border-white"></div>
+      } @else {
+        Войти
+      }
+    </button>
+    <div class="flex items-center gap-4 w-full text-gray-400">
+      <div class="h-px bg-[#999999] w-full"></div>
+      <div class="text-lg">или</div>
+      <div class="h-px bg-[#999999] w-full"></div>
+    </div>
+    <div class="text-gray-400">
+      У вас еще нет аккаунта? <a class="text-blue-500" href="/registration">Зарегистрироваться</a>
+    </div>
+  </div>
+  <div class="carousel">
+    <div class="h-full w-full bg-[url('/assets/loyalty-image.svg')] carousel-item bg-cover">
+      <div class="flex flex-col justify-between h-full">
+        <div>
+          <p class="text-3xl font-light">Программа</p>
+          <p class="text-3xl font-semibold">лояльности</p>
+        </div>
+        <div class="flex flex-col gap-4 font-medium text-sm">
+          <div class="flex gap-2">
+            <img src="/assets/bonus.svg" />
+            <div>Бонусные и скидочные программы</div>
+          </div>
+          <div class="flex gap-2">
+            <img src="/assets/route.svg" />
+            <div>Приветственные бонусы и уровни</div>
+          </div>
+          <div class="flex gap-2">
+            <img src="/assets/flame.svg" />
+            <div>Правила сгорания и подтверждения списаний</div>
+          </div>
+          <div class="flex gap-2">
+            <img src="/assets/beenhere.svg" />
+            <div>Механизмы защиты от злоупотреблений</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="h-full w-full bg-[url('/assets/loyalty-image.svg')] carousel-item">
+      <div>Программа лояльности</div>
+    </div>
+  </div>
+</form>

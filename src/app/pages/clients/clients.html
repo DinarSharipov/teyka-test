@@ -1,0 +1,173 @@
+<div class="flex flex-col screen-page">
+  <div
+    class="flex gap-4 text-gray-400 items-center border-b border-gray-300 min-h-15 max-h-15 px-8"
+  >
+    <app-tag [active]="activeTab() === 'common-settings'" (click)="setTab('common-settings')"
+      >Общие настройки</app-tag
+    >
+    <app-tag [active]="activeTab() === 'clients'" (click)="setTab('clients')">
+      Таблица клиентов
+    </app-tag>
+  </div>
+  @switch (activeTab()) {
+    @case ('clients') {
+      <div class="flex flex-col p-9 gap-4 overflow-y-auto">
+        <div class="flex flex-col gap-2">
+          <h1 class="text-2xl font-medium">Таблица клиентов</h1>
+          <p class="text-gray-400 text-sm font-light max-w-140 text-primary">
+            В этом разделе у вас есть возможность отправлять рассылки, а также редактировать
+            информацию о ваших клиентах.
+          </p>
+          <div class="flex gap-6">
+            <input
+              [formControl]="searchControl"
+              placeholder="Поиск"
+              class="flex-1 border-b border-gray-300 py-2 w-full outline-none"
+            />
+            <app-button (click)="openPush()"> Отправить Push </app-button>
+          </div>
+        </div>
+        <div class="flex flex-col overflow-hidden shadow-2xl rounded-md">
+          <div class="flex flex-col overflow-hidden">
+            <p-table
+              [value]="cards()"
+              [scrollable]="true"
+              class="clients-table"
+              scrollHeight="flex"
+              [(selection)]="selectedCards"
+              [loading]="tableLoading()"
+            >
+              <ng-template #header>
+                <tr>
+                  <th>
+                    <p-tableHeaderCheckbox />
+                  </th>
+                  <th>ID</th>
+                  <th>Устройство</th>
+                  <th>Макет карты</th>
+                  <th>Номер карты</th>
+                  <th>Фамилия владельца</th>
+                  <th>Имя владельца</th>
+                  <th>Номер телефона...</th>
+                  <th>Скидка</th>
+                  <th>Бонусы</th>
+                  <th>Средний чек</th>
+                  <th>Сумма покупок</th>
+                  <th>Ссылка на карту</th>
+                  <th>Дата создания</th>
+                </tr>
+              </ng-template>
+              <ng-template #body let-card>
+                <tr>
+                  <td>
+                    <p-tableCheckbox [value]="card" />
+                  </td>
+                  <td>{{ card.user_id }}</td>
+                  <td>
+                    <div class="flex gap-2 items-center justify-center">
+                      <img src="/assets/telegram.svg" />
+                      <img src="/assets/apple.svg" />
+                    </div>
+                  </td>
+                  <td>{{ card.template }}</td>
+                  <td>{{ card.barcode }}</td>
+                  <td>{{ card.last_name }}</td>
+                  <td>{{ card.first_name }}</td>
+                  <td>{{ card.phone }}</td>
+                  <td>{{ card.discount }}</td>
+                  <td>{{ card.bonus }}</td>
+                  <td>{{ card.summ }}</td>
+                  <td>{{ card.summ_all }}</td>
+                  <td>
+                    <a class="flex justify-center" [href]="card.link">
+                      <img src="/assets/download.svg" />
+                    </a>
+                  </td>
+                  <td>{{ card.created_at | date: 'HH:mm dd.MM.yyyy' }}</td>
+                </tr>
+              </ng-template>
+            </p-table>
+          </div>
+          <div class="flex items-center self-end text-sm text-gray-400 font-light">
+            <span class="mx-1 text-color">Элементов на странице: </span>
+            <p-select
+              [options]="showSizes()"
+              optionLabel="label"
+              optionValue="value"
+              [(ngModel)]="rows"
+              style="border: none; border-bottom: 1px solid lightgray; border-radius: 0"
+              (ngModelChange)="onChangeSize($event)"
+            />
+            <p-paginator
+              [first]="first"
+              [rows]="rows"
+              [totalRecords]="totalSize"
+              (onPageChange)="onPageChange($event)"
+              [showCurrentPageReport]="true"
+              currentPageReportTemplate="{first} - {last} из {totalRecords}"
+              [showPageLinks]="false"
+            ></p-paginator>
+          </div>
+        </div>
+      </div>
+    }
+    @case ('common-settings') {
+      <div class="flex flex-col p-9 gap-4 overflow-y-auto">
+        <div>Страница не реализована</div>
+      </div>
+    }
+  }
+  <p-dialog
+    [modal]="true"
+    [closable]="true"
+    (visibleChange)="visibleChange($event)"
+    [(visible)]="visible"
+    [style]="{ width: '655px' }"
+  >
+    <h1 class="text-center font-medium text-xl">Новая Push-рассылка</h1>
+    <div class="flex flex-col gap-4">
+      <div class="flex flex-col gap-1">
+        <label for="message">Текст сообщения</label>
+        <textarea
+          [(ngModel)]="pushMessageText"
+          placeholder="Новое уведомление!"
+          class="border border-gray-300 outline-none rounded-md p-2"
+        ></textarea>
+        @if (submitted() && !pushMessageText()) {
+          <div class="text-red-500 text-sm">Поле обязательно для заполнения</div>
+        }
+      </div>
+      <div class="flex flex-col gap-1">
+        <label for="message">Превью</label>
+        <div class="border border-gray-300 rounded-md p-4 flex items-center gap-2">
+          <img src="/assets/wallet.svg" />
+          <div>
+            <div>Имя отправителя</div>
+            <div class="font-light">{{ pushMessageText() }}</div>
+          </div>
+        </div>
+      </div>
+      <div class="flex flex-col gap-1">
+        <label for="message">Дата отправки рассылки</label>
+        <p-select
+          placeholder="Выберите дату"
+          [options]="sendDateOptions"
+          style="border-radius: 6px; border-color: lightgray"
+          appendTo="body"
+          (onChange)="setSelectedSendDate($event)"
+        />
+        @if (submitted() && !selectedSendDate()) {
+          <div class="text-red-500 text-sm">Поле обязательно для заполнения</div>
+        }
+      </div>
+    </div>
+
+    <ng-template pTemplate="footer">
+      <app-button [disabled]="pushLoading()" (click)="closePush()">Отмена</app-button>
+      <app-button [loading]="pushLoading()" variant="black" (click)="onSendPush()"
+        >Отправить</app-button
+      >
+    </ng-template>
+  </p-dialog>
+  <p-toast />
+</div>

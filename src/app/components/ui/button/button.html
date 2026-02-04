@@ -1,0 +1,17 @@
+<button
+  [type]="type"
+  [disabled]="disabled"
+  class="py-2 px-4 transition-colors cursor-pointer rounded-md"
+  [ngClass]="classes"
+  [type]="type"
+  [disabled]="disabled"
+>
+  <div class="flex items-center gap-2">
+    @if (loading) {
+      <div class="border-r border-white w-5 h-5 rounded-full animate-spin"></div>
+    }
+    <div>
+      <ng-content />
+    </div>
+  </div>
+</button>

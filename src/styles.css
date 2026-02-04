@@ -1,0 +1,13 @@
+@import url('https://fonts.googleapis.com/css2?family=Monrope:wght@400;500;600;700;800&display=swap');
+@import "tailwindcss";
+
+body {
+  font-family: 'Monrope', sans-serif;
+}
+
+
+    router-outlet.router-flex + * {
+      display: flex;
+      flex: 1 1 auto;
+      flex-direction: column;
+    }

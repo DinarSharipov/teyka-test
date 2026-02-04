@@ -1,0 +1,63 @@
+.p-inputtext {
+  border: none;
+  border-bottom: 1px solid #999999;
+  border-radius: 0;
+  outline: none;
+  padding-left: 0;
+}
+
+.p-inputtext:enabled:focus {
+  outline: none;
+}
+
+.p-floatlabel label {
+  inset-inline-start: 0;
+  color: #999999;
+}
+
+.carousel {
+  display: grid;
+  grid-auto-flow: column;
+  grid-auto-columns: 100%;
+  gap: 0;
+  overflow-x: auto;
+  overscroll-behavior-x: contain;
+  scroll-snap-type: x mandatory;
+  scroll-behavior: smooth;
+  anchor-name: --carousel;
+  background-color: #F3F3F1;
+  scrollbar-width: none;
+
+  &::scroll-button(*) {
+    position: fixed;
+    left: 0px;
+    position-anchor: --carousel;
+    position-area: right bottom;
+    border-radius: 10px;
+    width: 45px;
+    height: 45px;
+    color: #F3F3F1;
+    border: none;
+    margin-bottom: 35px;
+    cursor: pointer;
+  }
+
+  &::scroll-button(*):disabled {
+    background-color: black;
+  }
+
+  &::scroll-button(right) {
+    content: url('/assets/arrowIcon.svg');
+    margin-right: 50px;
+  }
+  &::scroll-button(left) {
+    content: url('/assets/arrowIcon.svg');
+    margin-right: 100px;
+    transform: rotate(180deg);
+  }
+}
+
+.carousel-item {
+  scroll-snap-align: center;
+  padding: 35px;
+}

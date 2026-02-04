@@ -1,0 +1,15 @@
+.screen-page {
+  height: calc(100vh - 65px);
+}
+
+.clients-table {
+  font-size: 12px;
+  th {
+    color: #999999;
+    font-weight: 400;
+  }
+}
+
+::ng-deep.p-dialog-header {
+  padding: 0;
+}
