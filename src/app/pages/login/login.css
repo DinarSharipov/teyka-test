@@ -4,6 +4,8 @@
   border-radius: 0;
   outline: none;
   padding-left: 0;
+  padding-bottom: 5px;
+  padding-top: 15px;
 }
 
 .p-inputtext:enabled:focus {

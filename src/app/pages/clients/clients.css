@@ -13,3 +13,11 @@
 ::ng-deep.p-dialog-header {
   padding: 0;
 }
+
+::ng-deep.p-paginator .p-paginator-current {
+  color: #999999;
+}
+
+::ng-deep.p-select-label {
+  color: #999999;
+}

@@ -26,7 +26,6 @@
         <p class="mt-1 text-red-500 text-xs">Поле обязательно для заполнения</p>
       }
     </p-floatlabel>
-
     <p-floatlabel class="w-full" variant="on">
       <input
         name="password"
@@ -37,6 +36,7 @@
         [(ngModel)]="password"
         autocomplete="off"
         #passwordModel="ngModel"
+        type="password"
       />
       <label for="password">Введите пароль</label>
       @if (form.submitted && passwordModel.invalid) {
@@ -45,10 +45,10 @@
     </p-floatlabel>
     <button
       type="submit"
-      [disabled]="loading"
+      [disabled]="loading()"
       class="w-full h-11.5 bg-[#1F1F1F] rounded-sm text-white cursor-pointer hover:opacity-85 active:opacity-100 flex justify-center items-center"
     >
-      @if (loading) {
+      @if (loading()) {
         <div class="animate-spin w-5 h-5 rounded-full border-r border-white"></div>
       } @else {
         Войти
@@ -60,7 +60,7 @@
       <div class="h-px bg-[#999999] w-full"></div>
     </div>
     <div class="text-gray-400">
-      У вас еще нет аккаунта? <a class="text-blue-500" href="/registration">Зарегистрироваться</a>
+      У вас еще нет аккаунта? <a class="text-blue-500 ml-2" href="/">Зарегистрироваться</a>
     </div>
   </div>
   <div class="carousel">
@@ -96,4 +96,5 @@
       <div>Программа лояльности</div>
     </div>
   </div>
+  <p-toast />
 </form>

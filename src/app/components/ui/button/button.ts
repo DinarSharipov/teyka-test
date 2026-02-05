@@ -19,7 +19,7 @@ export class ButtonComponent {
     return {
       'bg-[#1F1F1F] text-white': this.variant === 'black',
       'bg-gray-200 text-black': this.variant === 'grey',
-      'opacity-50 pointer-events-none cursor-not-allowed': this.disabled || this.loading,
+      'opacity-50 pointer-events-none cursor-not-allowed hover:none': this.disabled || this.loading,
     };
   }
 }

@@ -12,11 +12,12 @@ interface AuthResponse {
 @Injectable({ providedIn: 'root' })
 export class AuthService {
   private router = inject(Router);
+  private readonly http = inject(HttpClient);
+
   private readonly AUTH_URL = 'https://api.teyca.ru/test-auth-only';
   private readonly TOKEN_KEY = 'teyka_token';
 
   public isAuth = signal<boolean>(!!localStorage.getItem(this.TOKEN_KEY));
-  private readonly http = inject(HttpClient);
 
   public login(login: string, password: string): Observable<string> {
     return this.http.post<AuthResponse>(this.AUTH_URL, { login, password }).pipe(
@@ -27,6 +28,8 @@ export class AuthService {
         }
 
         if (response.error) {
+          console.log('THWOR', response);
+
           throw new Error(response.error);
         }
       }),
